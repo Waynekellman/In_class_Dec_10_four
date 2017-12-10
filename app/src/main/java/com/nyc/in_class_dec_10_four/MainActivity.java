@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,17 +17,22 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ArrayList<BirdModel> birds;
     private RecyclerView recyclerView;
+    private TextView description, source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
+        description = findViewById(R.id.description);
+        source = findViewById(R.id.source);
         birds = new ArrayList<>();
         ArrayList<String> members;
 
         try {
             JSONObject jsonObject = new JSONObject(Constant.json);
+            description.setText(jsonObject.get("description").toString());
+            source.setText(jsonObject.get("source").toString());
             JSONArray jsonArray = jsonObject.getJSONArray("birds");
             ArrayList<JSONObject> jsonObjectArrayList = new ArrayList<>();
             for (int i = 0; i < jsonArray.length() ; i++) {
